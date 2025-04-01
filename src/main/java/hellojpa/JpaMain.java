@@ -15,13 +15,27 @@
 //        tx.begin();
 //
 //        try {
-//            Member member = new Member();
-//            member.setUsername("C");
 //
-//            System.out.println(" ========================= ");
+//            //저장
+//            Team team = new Team();
+//            team.setName("TeamA");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("member1");
 //            em.persist(member);
-//            System.out.println("member.getId() = " + member.getId());
-//            System.out.println(" ========================= ");
+//
+//            team.addMember(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Team findTeam = em.find(Team.class, team.getId());
+//            List<Member> members = findTeam.getMembers();
+//
+//            for (Member m : members) {
+//                System.out.println("m.getUsername() = " + m.getUsername());
+//            }
 //
 //            tx.commit();
 //        } catch (Exception e){
@@ -29,7 +43,6 @@
 //        }finally {
 //            em.close();
 //        }
-//
 //        emf.close();
 //    }
 //}
