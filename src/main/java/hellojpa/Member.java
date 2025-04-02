@@ -1,10 +1,7 @@
 package hellojpa;
 
 import jakarta.persistence.*;
-import jpabook.jpashop.domain.Order;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Member {
@@ -17,8 +14,13 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+   private Team team;
+
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
     public Long getId() {
         return id;
@@ -34,13 +36,5 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
     }
 }
