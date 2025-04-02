@@ -1,13 +1,11 @@
 package jpabook.jpashop;
 
-import hellojpa.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 //import jpabook.jpashop.domain.Members;
-import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
+import jpabook.jpashop.domain.Books;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -20,14 +18,11 @@ public class JpaMain {
 
         try {
 
-            Order order = new Order();
-            em.persist(order);
-//            order.addOrderItem(new OrderItem());
+            Books book = new Books();
+            book.setName("JPA");
+            book.setAuthor("김영한");
 
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
-
-            em.persist(orderItem);
+            em.persist(book);
 
             tx.commit();
         } catch (Exception e){
