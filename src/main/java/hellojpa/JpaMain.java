@@ -17,20 +17,33 @@
 //        tx.begin();
 //
 //        try {
-//            Child child1 = new Child();
-//            Child child2 = new Child();
+//            Member member = new Member();
+//            member.setUsername("member1");
+//            member.setHomeAddress(new Address("homeCity", "street", "10000"));
 //
-//            Parent parent = new Parent();
-//            parent.addChild(child1);
-//            parent.addChild(child2);
+//            member.getFavoriteFoods().add("치킨");
+//            member.getFavoriteFoods().add("치킨");
+//            member.getFavoriteFoods().add("피자");
 //
-//            em.persist(parent);
+//            member.getAddressHistory().add(new AddressEntity("old1", "street", "10000"));
+//            member.getAddressHistory().add(new AddressEntity("old2", "street", "10000"));
+//
+//            em.persist(member);
 //
 //            em.flush();
 //            em.clear();
 //
-//            Parent findParent = em.find(Parent.class, parent.getId());
-//            findParent.getChildList().remove(0);
+//            System.out.println("=================START==================");
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            Address a = findMember.getHomeAddress();
+//            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipCode()));
+//
+//            findMember.getFavoriteFoods().remove("치킨");
+//            findMember.getFavoriteFoods().add("한식");
+//
+////            findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
+////            findMember.getAddressHistory().add(new Address("newCity1", "street", "10000"));
 //
 //            tx.commit();
 //        } catch (Exception e){
