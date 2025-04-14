@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Teams {
     private Long id;
     private String name;
 
+//    @BatchSize(size = 100)
     @OneToMany(mappedBy = "teams")
     private List<MemberList> memberLists = new ArrayList<>();
 

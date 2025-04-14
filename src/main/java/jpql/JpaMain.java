@@ -1,5 +1,6 @@
 package jpql;
 
+import hellojpa.Team;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,38 +16,45 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Teams teams = new Teams();
-            teams.setName("teamA");
-            em.persist(teams);
+            Teams teamsA = new Teams();
+            teamsA.setName("팀A");
+            em.persist(teamsA);
 
-            for (int i=0; i<100; i++){
-                MemberList memberList = new MemberList();
-                memberList.setUsername("member1");
-                memberList.setAge(10);
+            Teams teamsB = new Teams();
+            teamsB.setName("팀B");
+            em.persist(teamsB);
 
-                memberList.setTeams(teams);
+            MemberList member1 = new MemberList();
+            member1.setUsername("회원1");
+            member1.setTeams(teamsA);
+            em.persist(member1);
 
-                em.persist(memberList);
-            }
+            MemberList member2 = new MemberList();
+            member2.setUsername("회원2");
+            member2.setTeams(teamsA);
+            em.persist(member2);
+
+            MemberList member3 = new MemberList();
+            member3.setUsername("회원3");
+            member3.setTeams(teamsB);
+            em.persist(member3);
 
             em.flush();
             em.clear();
 
-            String query =
-                    "select " +
-                            "case when m.age <= 10 then '학생요금'" +
-                            "     when m.age >= 60 then '경로요금'" +
-                            "     else '일반요금'" +
-                            "end " +
-                    "from MemberList m";
+            String query = "select t from Teams t join fetch t.memberLists";
 
-            List<String> result = em.createQuery(query, String.class)
+            List<Teams> result = em.createQuery(query, Teams.class)
+                    .setFirstResult(0)
+                    .setMaxResults(2)
                     .getResultList();
 
-            for (String s : result) {
-                System.out.println("s = " + s);
+            for (Teams teams : result) {
+                System.out.println("member = " + teams.getName() + "|members= " + teams.getMemberLists().size());
+                for( MemberList memberList : teams.getMemberLists()) {
+                    System.out.println("memberList = " + memberList);
+                }
             }
-
 
             tx.commit();
         } catch (Exception e){
